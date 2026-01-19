@@ -5,18 +5,22 @@ from pydantic import BaseModel, Field, validator
 from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
+import os
 
 
 
 summary = []
 recent_chats = []
-load_dotenv()
+#load_dotenv()
+token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+
 
 
 
 output_llm = HuggingFaceEndpoint(
     model = "zai-org/GLM-4.7",
     task = "text-generation",
+    huggingfacehub_api_token = token,
     provider = "novita",
     temperature = 1.5
 )
@@ -25,6 +29,7 @@ output_model = ChatHuggingFace(llm = output_llm)
 summary_llm = HuggingFaceEndpoint(
     model = "zai-org/GLM-4.7",
     task = "text-generation",
+    huggingfacehub_api_token = token,
     provider = "novita",
     temperature = 0.5
 )
